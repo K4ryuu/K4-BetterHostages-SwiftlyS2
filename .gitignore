@@ -1,0 +1,30 @@
+# Build outputs
+build/
+bin/
+obj/
+publish/
+out/
+
+# Solution and project files
+*.sln
+*.csproj.user
+
+# IDE
+.idea/
+.vs/
+.vscode/
+
+# Mac
+.DS_Store
+._*
+
+# Local files
+*.local
+*.local.*
+
+# NuGet
+*.nupkg
+packages/
+
+# Archives
+*.zip

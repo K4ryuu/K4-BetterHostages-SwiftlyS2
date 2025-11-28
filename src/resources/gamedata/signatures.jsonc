@@ -1,0 +1,12 @@
+{
+  "CHostage::Follow": {
+    "lib": "server",
+    "windows": "48 8B C4 55 53 56 57 41 56 48 8D 68 ? 48 81 EC ? ? ? ? 0F 29 70 ? 4C 8B F2",
+    "linux": "55 48 89 E5 41 57 41 56 41 55 41 54 49 89 FC 53 48 89 F3 48 81 EC ? ? ? ? 48 85 F6"
+  },
+  "CHostage::DropHostage": {
+    "lib": "server",
+    "windows": "48 8B C4 55 41 56 48 8D 6C 24",
+    "linux": "55 48 89 E5 41 57 41 56 41 55 49 89 F5 41 54 41 89 D4 53 48 89 FB 48 81 EC"
+  }
+}

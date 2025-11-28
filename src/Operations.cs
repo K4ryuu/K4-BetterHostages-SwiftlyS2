@@ -48,13 +48,7 @@ public partial class HostageRescuePlugin
         return FindValidHostagePosition(pawn, initialPosition);
     }
 
-    private float GetDistance(Vector pos1, Vector pos2)
-    {
-        float dx = pos1.X - pos2.X;
-        float dy = pos1.Y - pos2.Y;
-        float dz = pos1.Z - pos2.Z;
-        return MathF.Sqrt(dx * dx + dy * dy + dz * dz);
-    }
+    private static float GetDistance(Vector pos1, Vector pos2) => (pos1 - pos2).Length();
 
     private Vector FindValidHostagePosition(CCSPlayerPawn pawn, Vector initialPosition)
     {

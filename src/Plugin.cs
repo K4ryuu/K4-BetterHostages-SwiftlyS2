@@ -8,7 +8,7 @@ namespace HostageRescue;
 
 [PluginMetadata(
     Id = "k4.betterhostages",
-    Version = "1.0.0",
+    Version = "1.0.1",
     Name = "K4 - Better Hostages",
     Author = "K4ryuu",
     Description = "Enables both Ts and CTs to pick up and drop hostages, allowing their positions to be tactically rearranged during gameplay."
@@ -27,8 +27,8 @@ public partial class HostageRescuePlugin(ISwiftlyCore core) : BasePlugin(core)
     internal readonly Dictionary<int, CancellationTokenSource> _playerValidationTimers = [];
     internal readonly Dictionary<int, ActionState> _playerActionState = [];
 
-    internal readonly SoundEvent _hostagePickupSound = new() { Name = "sounds/vo/hostage/hostage_led_by_ct.vsnd_c", Volume = 1.0f };
-    internal readonly SoundEvent _hostageDropSound = new() { Name = "sounds/vo/hostage/hostage_being_rescued.vsnd_c", Volume = 1.0f };
+    internal readonly SoundEvent _hostagePickupSound = new("Hostage.CutFreeWithDefuser");
+    internal readonly SoundEvent _hostageDropSound = new("Hostage.CutFreeWithDefuser");
 
     public override void Load(bool hotReload)
     {

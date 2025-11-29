@@ -44,6 +44,7 @@ public partial class HostageRescuePlugin
             _playerActionState[playerId] = state;
 
             SetProgressBar(player, DROP_DURATION, CSPlayerBlockingUseAction_t.k_CSPlayerBlockingUseAction_HostageDropping);
+            PlaySound(_hostageDropSound, pawn);
 
             var progressTimer = Core.Scheduler.DelayBySeconds(DROP_DURATION, () => CompleteDropHostage(player));
             _playerProgressTimers[playerId] = progressTimer;
@@ -61,7 +62,7 @@ public partial class HostageRescuePlugin
             if (hostage?.IsValid != true)
                 return;
 
-            var distance = CalculateDistance(pawn.AbsOrigin!.Value, hostage.AbsOrigin!.Value);
+            var distance = (pawn.AbsOrigin!.Value - hostage.AbsOrigin!.Value).Length();
             if (distance > PICKUP_RANGE)
                 return;
 
@@ -72,6 +73,7 @@ public partial class HostageRescuePlugin
             _playerActionState[playerId] = state;
 
             SetProgressBar(player, PICKUP_DURATION, CSPlayerBlockingUseAction_t.k_CSPlayerBlockingUseAction_HostageGrabbing);
+            PlaySound(_hostagePickupSound, hostage);
 
             var progressTimer = Core.Scheduler.DelayBySeconds(PICKUP_DURATION, () => CompletePickupHostage(player, hostage));
             _playerProgressTimers[playerId] = progressTimer;
@@ -116,7 +118,7 @@ public partial class HostageRescuePlugin
             return;
         }
 
-        float distance = CalculateDistance(pawn.AbsOrigin.Value, hostage.AbsOrigin!.Value);
+        float distance = (pawn.AbsOrigin.Value - hostage.AbsOrigin!.Value).Length();
         if (distance >= PICKUP_RANGE)
         {
             CancelHostageAction(player.PlayerID);

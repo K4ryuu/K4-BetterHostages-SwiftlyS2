@@ -150,9 +150,6 @@ public partial class HostageRescuePlugin
             return;
 
         _cHostageFollow.Call(hostage.Address, pawn.Address);
-
-        if (hostage.AbsOrigin != null)
-            PlaySoundNearby(hostage.AbsOrigin.Value, _hostagePickupSound);
     }
 
     private void InvokeHostageDrop(IPlayer player, Vector? dropPosition = null)
@@ -175,7 +172,6 @@ public partial class HostageRescuePlugin
             return;
 
         _cHostageDrop.Call(hostageHandle!.Address, ref dropPos, false);
-        PlaySoundNearby(dropPos, _hostageDropSound);
     }
 
     private void SetProgressBar(IPlayer player, float duration, CSPlayerBlockingUseAction_t actionType)
@@ -200,39 +196,10 @@ public partial class HostageRescuePlugin
         pawn.BlockingUseActionInProgressUpdated();
     }
 
-    private void PlaySoundNearby(Vector sourcePos, SoundEvent sound, float radius = 2000f)
+    private void PlaySound(SoundEvent sound, CEntityInstance source)
     {
-        var players = Core.PlayerManager.GetAllPlayers();
-        if (players == null)
-            return;
-
-        foreach (var player in players)
-        {
-            if (!IsPlayerValid(player))
-                continue;
-
-            var pawnPos = player.PlayerPawn?.AbsOrigin;
-            if (pawnPos == null)
-                continue;
-
-            float distance = CalculateDistance(sourcePos, pawnPos.Value);
-            if (distance <= radius)
-                sound.Recipients.AddRecipient(player.PlayerID);
-        }
-
+        sound.SetSourceEntity(source);
+        sound.Recipients.AddAllPlayers();
         sound.Emit();
-    }
-
-    private static bool IsPlayerValid(IPlayer? player)
-    {
-        return player?.IsValid == true && player.PlayerPawn?.IsValid == true && !player.IsFakeClient;
-    }
-
-    private static float CalculateDistance(Vector pos1, Vector pos2)
-    {
-        float dx = pos1.X - pos2.X;
-        float dy = pos1.Y - pos2.Y;
-        float dz = pos1.Z - pos2.Z;
-        return (float)Math.Sqrt(dx * dx + dy * dy + dz * dz);
     }
 }
